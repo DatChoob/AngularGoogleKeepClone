@@ -1,7 +1,37 @@
 <div class="noteItem">
-  <mat-icon svgIcon="edit"></mat-icon>
-  <div>
-    <b>{{ note.title }} </b>
-    <p>{{ note.text }}</p>
+  <div class="iconGroup">
+    <mat-icon
+      svgIcon="edit"
+      class="editIcon"
+      *ngIf="!editing"
+      (click)="turnOnEditMode()"
+    ></mat-icon>
+    <mat-icon
+      svgIcon="save"
+      class="saveIcon"
+      *ngIf="editing"
+      (click)="save()"
+    ></mat-icon>
+    <mat-icon svgIcon="delete" class="deleteIcon" (click)="delete()"></mat-icon>
+  </div>
+
+  <div *ngIf="!editing">
+    <span class="title-font-weight font-20">{{ note.title }}</span>
+    <p style="white-space: pre-wrap; overflow-wrap: break-word;">
+      {{ note.text }}
+    </p>
+  </div>
+  <div *ngIf="editing">
+    <input
+      type="text"
+      [(ngModel)]="note.title"
+      class="editable-text title-font-weight disable-borders font-20"
+    />
+    <div style="margin-block-start: 1em; margin-block-end: 1em;">
+      <textarea
+        [(ngModel)]="note.text"
+        class="editable-text disable-borders font-20"
+      ></textarea>
+    </div>
   </div>
 </div>

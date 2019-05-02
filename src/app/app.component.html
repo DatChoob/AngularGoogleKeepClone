@@ -10,6 +10,7 @@
           type="text"
           placeholder="Title"
           id="title"
+          class="title-font-weight editable-text disable-borders font-20"
           #title="ngModel"
           name="title"
           [(ngModel)]="newNote.title"
@@ -18,7 +19,7 @@
         />
         <textarea
           id="text"
-          class="text-input"
+          class="text-input disable-borders font-20 editable-text"
           #text="ngModel"
           [(ngModel)]="newNote.text"
           matNativeControl
@@ -40,7 +41,10 @@
   <!-- css grid of the notes -->
 
   <div class="noteItem-grid">
-    <app-note *ngFor="let noteItem of notes | async" [note]="noteItem" class="noteItem"></app-note>
-    
+    <app-note
+      *ngFor="let noteItem of notes | async"
+      [note]="noteItem"
+      class="noteItem"
+    ></app-note>
   </div>
 </div>

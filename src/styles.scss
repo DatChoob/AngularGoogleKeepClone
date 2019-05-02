@@ -1,4 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
-body{
-    background-color: #f1f1f1;
+body {
+  background-color: #f1f1f1;
+}
+
+$title-font-weight: 900;
+
+.disable-borders {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+}
+.font-20 {
+  font-size: 20px;
+}
+
+.title-font-weight {
+  font-weight: $title-font-weight;
+}
+
+.editable-text {
+  resize: none;
+  max-height: 40vh;
+  width: 100%;
+  border: none;
 }

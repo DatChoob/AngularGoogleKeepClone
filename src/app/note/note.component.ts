@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
+import {
+  AngularFirestore,
+  AngularFirestoreDocument
+} from "@angular/fire/firestore";
 import { MatIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import Note from "../model/note";
@@ -10,6 +13,12 @@ import Note from "../model/note";
   styleUrls: ["./note.component.scss"]
 })
 export class NoteComponent implements OnInit {
+  ngOnInit() {
+    this.noteRef = this.db.collection("notes").doc(this.note.id);
+  }
+  editing: boolean = false;
+
+  noteRef: AngularFirestoreDocument<Note>;
   constructor(
     private db: AngularFirestore,
     iconRegistry: MatIconRegistry,
@@ -19,19 +28,32 @@ export class NoteComponent implements OnInit {
       "edit",
       sanitizer.bypassSecurityTrustResourceUrl("assets/img/icon/edit-24px.svg")
     );
+
+    iconRegistry.addSvgIcon(
+      "delete",
+      sanitizer.bypassSecurityTrustResourceUrl(
+        "assets/img/icon/delete-24px.svg"
+      )
+    );
+    iconRegistry.addSvgIcon(
+      "save",
+      sanitizer.bypassSecurityTrustResourceUrl("assets/img/icon/save-24px.svg")
+    );
   }
 
   @Input()
   note: Note;
 
-  ngOnInit() {
-    console.log(this.note);
+  turnOnEditMode() {
+    this.editing = true;
   }
 
   delete() {
-    this.db
-      .collection("notes")
-      .doc(this.note.id)
-      .delete();
+    this.noteRef.delete();
+  }
+
+  save() {
+    this.editing = false;
+    this.noteRef.update(this.note);
   }
 }

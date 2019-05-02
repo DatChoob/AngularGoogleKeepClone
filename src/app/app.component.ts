@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { MatIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import Note from "./model/note";
+import * as firebase from "firebase";
 
 @Component({
   selector: "app-root",
@@ -23,7 +24,9 @@ export class AppComponent {
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
   ) {
-    this.notes = db.collection<Note>("notes").valueChanges();
+    this.notes = db
+      .collection<Note>("notes", ref => ref.orderBy("timestamp"))
+      .valueChanges();
     iconRegistry.addSvgIcon(
       "add",
       sanitizer.bypassSecurityTrustResourceUrl("assets/img/icon/add-24px.svg")
@@ -36,8 +39,14 @@ export class AppComponent {
 
   async onSubmit() {
     if (this.newNote.title.trim() != "" && this.newNote.text.trim() != "") {
+      this.newNote.title = this.newNote.title.trim();
+      this.newNote.text = this.newNote.text.trim();
       let docRef = await this.db.collection("notes").add(this.newNote);
-      docRef.update({ id: docRef.id });
+      docRef.update({
+        id: docRef.id,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
       this.newNote.title = "";
       this.newNote.text = "";
     }
