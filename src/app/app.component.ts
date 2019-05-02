@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { MatIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import Note from "./model/note";
-import * as firebase from "firebase";
+import { firestore } from "firebase/app";
 
 @Component({
   selector: "app-root",
@@ -44,7 +44,7 @@ export class AppComponent {
       let docRef = await this.db.collection("notes").add(this.newNote);
       docRef.update({
         id: docRef.id,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: firestore.FieldValue.serverTimestamp()
       });
 
       this.newNote.title = "";
