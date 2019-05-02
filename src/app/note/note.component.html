@@ -15,9 +15,9 @@
     <mat-icon svgIcon="delete" class="deleteIcon" (click)="delete()"></mat-icon>
   </div>
 
-  <div *ngIf="!editing">
+  <div *ngIf="!editing" class="note">
     <span class="title-font-weight font-20">{{ note.title }}</span>
-    <p style="white-space: pre-wrap; overflow-wrap: break-word;">
+    <p>
       {{ note.text }}
     </p>
   </div>
@@ -27,11 +27,13 @@
       [(ngModel)]="note.title"
       class="editable-text title-font-weight disable-borders font-20"
     />
-    <div style="margin-block-start: 1em; margin-block-end: 1em;">
+    <p>
       <textarea
+        [style.height.px]="textAreaHeight"
         [(ngModel)]="note.text"
         class="editable-text disable-borders font-20"
+        (input)="adjustTextAreaHeight($event.target)"
       ></textarea>
-    </div>
+    </p>
   </div>
 </div>

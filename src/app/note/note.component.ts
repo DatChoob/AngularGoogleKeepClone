@@ -16,9 +16,14 @@ export class NoteComponent implements OnInit {
   ngOnInit() {
     this.noteRef = this.db.collection("notes").doc(this.note.id);
   }
-  editing: boolean = false;
 
+  @Input()
+  note: Note;
+
+  editing: boolean = false;
+  textAreaHeight: number = 40;
   noteRef: AngularFirestoreDocument<Note>;
+
   constructor(
     private db: AngularFirestore,
     iconRegistry: MatIconRegistry,
@@ -41,8 +46,10 @@ export class NoteComponent implements OnInit {
     );
   }
 
-  @Input()
-  note: Note;
+  adjustTextAreaHeight(e) {
+    console.log("adjusting");
+    this.textAreaHeight = e.scrollHeight;
+  }
 
   turnOnEditMode() {
     this.editing = true;
