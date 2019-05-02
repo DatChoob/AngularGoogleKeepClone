@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { MatIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
+import Note from "../model/note";
 
 @Component({
   selector: "app-note",
@@ -21,7 +22,16 @@ export class NoteComponent implements OnInit {
   }
 
   @Input()
-  note: any;
+  note: Note;
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.note);
+  }
+
+  delete() {
+    this.db
+      .collection("notes")
+      .doc(this.note.id)
+      .delete();
+  }
 }
