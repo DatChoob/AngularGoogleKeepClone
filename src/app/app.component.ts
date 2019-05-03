@@ -56,4 +56,35 @@ export class AppComponent {
       this.snackBar.open("Note Added", null, { duration: 1000 });
     }
   }
+
+  ngAfterViewChecked() {
+    this.resizeAllGridItems();
+  }
+
+  //recieved masonary code from https://gist.github.com/urkopineda/026023d70d1d1745297515abb145d5f3
+  onResize(event) {
+    this.resizeAllGridItems();
+  }
+
+  resizeGridItem(item) {
+    var grid = document.getElementsByClassName("flex-container")[0];
+    var rowHeight = parseInt(
+      window.getComputedStyle(grid).getPropertyValue("grid-auto-rows")
+    );
+    var rowGap = parseInt(
+      window.getComputedStyle(grid).getPropertyValue("grid-row-gap")
+    );
+    var rowSpan = Math.ceil(
+      (item.querySelector(".card").getBoundingClientRect().height + rowGap) /
+        (rowHeight + rowGap)
+    );
+    item.style.gridRowEnd = "span " + rowSpan;
+  }
+
+  resizeAllGridItems() {
+    var allItems = document.getElementsByClassName("flex-item");
+    for (var x = 0; x < allItems.length; x++) {
+      this.resizeGridItem(allItems[x]);
+    }
+  }
 }

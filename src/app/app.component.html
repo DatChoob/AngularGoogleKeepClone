@@ -39,11 +39,11 @@
   </div>
   <!-- css grid of the notes -->
 
-  <div class="noteItem-grid">
-    <app-note
-      *ngFor="let noteItem of notes$ | async"
-      [note]="noteItem"
-      class="noteItem"
-    ></app-note>
+  <div (window:resize)="onResize(event)">
+    <div class="flex-container" infinite-scroll>
+      <div class="flex-item" *ngFor="let noteItem of notes$ | async">
+        <app-note [note]="noteItem" class="noteIem card"></app-note>
+      </div>
+    </div>
   </div>
 </div>
