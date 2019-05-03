@@ -27,7 +27,7 @@ export class AppComponent {
     sanitizer: DomSanitizer
   ) {
     this.notes = db
-      .collection<Note>("notes", ref => ref.orderBy("timestamp"))
+      .collection<Note>("notes", ref => ref.orderBy("timestamp", "desc"))
       .valueChanges();
     iconRegistry.addSvgIcon(
       "add",

@@ -1,5 +1,13 @@
+.root {
+  padding: 50px 100px;
+  @media only screen and (max-width: 768px) {
+    padding: 50px;
+  }
+}
+
 .text-input-card {
-  width: 400px;
+  width: 100%;
+  max-width: 500px;
 }
 
 .submit-note-button {
@@ -37,10 +45,8 @@
 .noteItem-grid {
   display: grid;
   justify-content: center;
-
   grid-template-columns: 1fr 1fr;
   grid-gap: 15px 10px;
-  margin: 0px 20px;
   @media only screen and (max-width: 768px) {
     grid-template-columns: 1fr;
   }
