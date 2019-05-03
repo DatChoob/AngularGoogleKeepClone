@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 body {
   background-color: #f1f1f1;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 $title-font-weight: 900;
@@ -25,4 +27,9 @@ $title-font-weight: 900;
   max-height: 40vh;
   width: 100%;
   border: none;
+}
+
+html,
+body {
+  height: 100%;
 }

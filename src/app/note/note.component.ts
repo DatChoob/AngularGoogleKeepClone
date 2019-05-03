@@ -3,7 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
-import { MatIconRegistry } from "@angular/material";
+import { MatIconRegistry, MatSnackBar } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import Note from "../model/note";
 
@@ -13,10 +13,6 @@ import Note from "../model/note";
   styleUrls: ["./note.component.scss"]
 })
 export class NoteComponent implements OnInit {
-  ngOnInit() {
-    this.noteRef = this.db.collection("notes").doc(this.note.id);
-  }
-
   @Input()
   note: Note;
 
@@ -26,6 +22,7 @@ export class NoteComponent implements OnInit {
 
   constructor(
     private db: AngularFirestore,
+    private snackBar: MatSnackBar,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
   ) {
@@ -46,8 +43,11 @@ export class NoteComponent implements OnInit {
     );
   }
 
-  adjustTextAreaHeight(e) {
-    console.log("adjusting");
+  ngOnInit() {
+    this.noteRef = this.db.collection("notes").doc(this.note.id);
+  }
+
+  adjustTextAreaHeight(e: HTMLElement) {
     this.textAreaHeight = e.scrollHeight;
   }
 
@@ -56,11 +56,15 @@ export class NoteComponent implements OnInit {
   }
 
   delete() {
-    this.noteRef.delete();
+    this.db.firestore.runTransaction(async () => {
+      this.noteRef.delete();
+    });
+    this.snackBar.open("Note Deleted", null, { duration: 1000 });
   }
 
   save() {
     this.editing = false;
-    this.noteRef.update(this.note);
+    this.db.firestore.runTransaction(() => this.noteRef.update(this.note));
+    this.snackBar.open("Note Saved", null, { duration: 1000 });
   }
 }

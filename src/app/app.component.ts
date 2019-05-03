@@ -5,6 +5,7 @@ import { MatIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import Note from "./model/note";
 import { firestore } from "firebase/app";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-root",
@@ -21,6 +22,7 @@ export class AppComponent {
   };
   constructor(
     private db: AngularFirestore,
+    private snackBar: MatSnackBar,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
   ) {
@@ -41,7 +43,9 @@ export class AppComponent {
     if (this.newNote.title.trim() != "" && this.newNote.text.trim() != "") {
       this.newNote.title = this.newNote.title.trim();
       this.newNote.text = this.newNote.text.trim();
+
       let docRef = await this.db.collection("notes").add(this.newNote);
+
       docRef.update({
         id: docRef.id,
         timestamp: firestore.FieldValue.serverTimestamp()
@@ -49,6 +53,7 @@ export class AppComponent {
 
       this.newNote.title = "";
       this.newNote.text = "";
+      this.snackBar.open("Note Added", null, { duration: 1000 });
     }
   }
 }
