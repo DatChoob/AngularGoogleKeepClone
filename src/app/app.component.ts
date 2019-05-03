@@ -14,7 +14,7 @@ import { MatSnackBar } from "@angular/material";
 })
 export class AppComponent {
   textAreaHeight: number = 80;
-  notes: Observable<Note[]>;
+  notes$: Observable<Note[]>;
 
   newNote: Note = <Note>{
     title: "",
@@ -26,7 +26,7 @@ export class AppComponent {
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
   ) {
-    this.notes = db
+    this.notes$ = db
       .collection<Note>("notes", ref => ref.orderBy("timestamp", "desc"))
       .valueChanges();
     iconRegistry.addSvgIcon(

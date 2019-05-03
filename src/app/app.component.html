@@ -41,7 +41,7 @@
 
   <div class="noteItem-grid">
     <app-note
-      *ngFor="let noteItem of notes | async"
+      *ngFor="let noteItem of notes$ | async"
       [note]="noteItem"
       class="noteItem"
     ></app-note>
