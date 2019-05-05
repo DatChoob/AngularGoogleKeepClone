@@ -62,7 +62,7 @@ export class AppComponent {
   }
 
   //recieved masonary code from https://gist.github.com/urkopineda/026023d70d1d1745297515abb145d5f3
-  onResize(event) {
+  onResize() {
     this.resizeAllGridItems();
   }
 
