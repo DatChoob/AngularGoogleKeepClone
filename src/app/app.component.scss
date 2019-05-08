@@ -7,7 +7,6 @@
 
 .text-input-card {
   width: 100%;
-  max-width: 500px;
 }
 
 .submit-note-button {
@@ -53,4 +52,27 @@
   }
 }
 .flex-item {
+}
+
+#header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 20px;
+}
+
+#header span {
+  margin: 0 12px;
+}
+
+.firebase-logo {
+  width: 30px;
+}
+
+.angular-logo {
+  width: 40px;
+}
+
+.google-keep-logo {
+  width: 50px;
 }

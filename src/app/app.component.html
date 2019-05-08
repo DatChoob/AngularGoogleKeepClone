@@ -1,5 +1,12 @@
 <router-outlet></router-outlet>
 <div class="root">
+  <div id="header">
+    <img class="google-keep-logo" src="../../assets/img/google-keep-logo.png" />
+    <span>+</span>
+    <img class="angular-logo" src="../../assets/img/angular-logo.png" />
+    <span>+</span>
+    <img class="firebase-logo" src="../../assets/img/firebase-logo.png" />
+  </div>
   <div id="add-note">
     <div class="text-input-card">
       <form class="text-input-form" (ngSubmit)="onSubmit()" #heroForm="ngForm">
