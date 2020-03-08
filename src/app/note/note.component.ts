@@ -3,9 +3,10 @@ import {
   AngularFirestore,
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
-import { MatIconRegistry, MatSnackBar } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import Note from "../model/note";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
   selector: "app-note",

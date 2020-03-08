@@ -1,12 +1,12 @@
 import { Component, ViewChild } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
-import { MatIconRegistry } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import Note from "./model/note";
 import { firestore } from "firebase/app";
-import { MatSnackBar } from "@angular/material";
 import { NgForm } from "@angular/forms";
+import { MatIconRegistry } from "@angular/material/icon";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-root",
