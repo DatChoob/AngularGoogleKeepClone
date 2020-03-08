@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
 import { MatIconRegistry } from "@angular/material";
@@ -6,6 +6,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import Note from "./model/note";
 import { firestore } from "firebase/app";
 import { MatSnackBar } from "@angular/material";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: "app-root",
@@ -20,6 +21,9 @@ export class AppComponent {
     title: "",
     text: ""
   };
+  @ViewChild("heroForm")
+  myForm: NgForm;
+
   constructor(
     private db: AngularFirestore,
     private snackBar: MatSnackBar,
@@ -40,21 +44,18 @@ export class AppComponent {
   }
 
   async onSubmit() {
-    if (this.newNote.title.trim() != "" && this.newNote.text.trim() != "") {
-      this.newNote.title = this.newNote.title.trim();
-      this.newNote.text = this.newNote.text.trim();
+    this.newNote.title = this.newNote.title.trim();
+    this.newNote.text = this.newNote.text.trim();
 
-      let docRef = await this.db.collection("notes").add(this.newNote);
+    let docRef = await this.db.collection("notes").add(this.newNote);
 
-      docRef.update({
-        id: docRef.id,
-        timestamp: firestore.FieldValue.serverTimestamp()
-      });
+    docRef.update({
+      id: docRef.id,
+      timestamp: firestore.FieldValue.serverTimestamp()
+    });
 
-      this.newNote.title = "";
-      this.newNote.text = "";
-      this.snackBar.open("Note Added", null, { duration: 1000 });
-    }
+    this.myForm.resetForm();
+    this.snackBar.open("Note Added", null, { duration: 1000 });
   }
 
   ngAfterViewChecked() {
